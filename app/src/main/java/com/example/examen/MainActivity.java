@@ -158,26 +158,79 @@ public class MainActivity extends AppCompatActivity {
      *
      * FLUJO:
      * 1. Ejecuta transacciones pendientes
-     * 2. Verifica si ya existe un fragment en fragment_container
-     * 3. Si no existe, carga el fragment de lista
+     * 2. Identifica qué tipo de fragment debería mostrarse
+     * 3. Limpia todos los fragments
+     * 4. Crea un nuevo fragment del tipo apropiado
      *
-     * NOTA: En portrait solo mostramos la lista. Al hacer click en un item,
-     * se REEMPLAZA este fragment con el de detalles.
+     * IMPORTANTE: No podemos "mover" fragments entre contenedores.
+     * Debemos crear nuevos fragments con los datos apropiados.
      */
     private void manejarPortrait() {
+        Log.d(TAG, "Manejando portrait - preparando fragments");
+
         // Ejecutar transacciones pendientes
         getSupportFragmentManager().executePendingTransactions();
 
-        // Verificar si ya hay un fragment en el contenedor principal
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment_container) == null) {
-            // No hay fragment, cargar la lista
-            Log.d(TAG, "Cargando fragment de lista en portrait");
+        // PASO 1: Identificar qué había en landscape para decidir qué mostrar
+        androidx.fragment.app.Fragment fragmentDetalle =
+            getSupportFragmentManager().findFragmentById(R.id.fragment_detalle);
+        androidx.fragment.app.Fragment fragmentContainer =
+            getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        Log.d(TAG, "Fragments encontrados:");
+        Log.d(TAG, "  - fragment_detalle: " + (fragmentDetalle != null ? fragmentDetalle.getClass().getSimpleName() : "null"));
+        Log.d(TAG, "  - fragment_container: " + (fragmentContainer != null ? fragmentContainer.getClass().getSimpleName() : "null"));
+
+        // PASO 2: Determinar qué fragment crear
+        androidx.fragment.app.Fragment nuevoFragment = null;
+
+        // Si había un detalle en landscape, obtener su ID para recrearlo
+        if (fragmentDetalle instanceof DetalleEntrenamientoFragment) {
+            Log.d(TAG, "Había DetalleFragment en landscape, recreándolo para portrait");
+            // Obtener el ID del entrenamiento del fragment de detalle
+            Bundle args = fragmentDetalle.getArguments();
+            if (args != null) {
+                int idEntrenamiento = args.getInt("id_entrenamiento", 1);
+                nuevoFragment = DetalleEntrenamientoFragment.newInstance(idEntrenamiento);
+            }
+        }
+        // Si ya había algo en container y NO viene de landscape, mantenerlo
+        else if (fragmentContainer != null) {
+            Log.d(TAG, "Ya hay fragment en container, lo mantenemos");
+            // En este caso no hacemos nada, el fragment ya está donde debe
+            return;
+        }
+
+        // PASO 3: Limpiar TODOS los fragments
+        Log.d(TAG, "Limpiando todos los fragments...");
+        for (androidx.fragment.app.Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment != null) {
+                Log.d(TAG, "Removiendo fragment: " + fragment.getClass().getSimpleName());
+                getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragment)
+                    .commitNow();
+            }
+        }
+
+        // PASO 4: Cargar el fragment apropiado en fragment_container
+        if (nuevoFragment != null) {
+            Log.d(TAG, "Cargando " + nuevoFragment.getClass().getSimpleName() + " en portrait");
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, nuevoFragment)
+                .commitNow();
+        } else {
+            // Por defecto, cargar la lista
+            Log.d(TAG, "Cargando lista por defecto en portrait");
             ListaEntrenamientosFragment listaFragment = new ListaEntrenamientosFragment();
             getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, listaFragment)
                 .commitNow();
         }
+
+        Log.d(TAG, "manejarPortrait completado");
     }
 
     /**

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Examen</string>
+    <string name="app_name">Entrenamientos</string>
     <string name="menu_anadir">Añadir Entrenamiento</string>
     <string name="titulo_lista">Lista de Entrenamientos</string>
     <string name="titulo_nuevo_entrenamiento">Nuevo Entrenamiento</string>
