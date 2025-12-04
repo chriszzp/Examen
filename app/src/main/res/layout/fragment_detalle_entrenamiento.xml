@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: fragment_detalle_entrenamiento.xml
+
+    PROPÓSITO:
+    Layout del DetalleEntrenamientoFragment que muestra los detalles completos
+    de un entrenamiento seleccionado. Es el "Detail" del patrón Master-Detail.
+
+    ESTRUCTURA:
+    - ScrollView: Permite hacer scroll si el contenido es más grande que la pantalla
+    - LinearLayout vertical: Organiza los elementos en columna
+    - ImageView: Icono grande del entrenamiento (120x120dp)
+    - TextViews: Nombre, descripción, duración y dificultad
+
+    USADO POR:
+    - DetalleEntrenamientoFragment.java (método onCreateView)
+
+    CÓMO SE USA:
+    1. DetalleEntrenamientoFragment recibe un ID de entrenamiento
+    2. Busca el entrenamiento en la lista
+    3. Infla este layout
+    4. Busca cada vista por ID
+    5. Asigna los valores del entrenamiento a las vistas
+
+    CUÁNDO SE MUESTRA:
+    - Portrait: Se reemplaza la lista cuando haces click en un item
+    - Landscape: Se muestra en el panel derecho junto a la lista
+
+    MODIFICACIONES COMUNES:
+    - Cambiar tamaño del icono: Modificar layout_width y layout_height del ImageView
+    - Añadir más campos: Agregar más TextViews (calorías, intensidad, etc.)
+    - Cambiar colores: Usar android:textColor en los TextViews
+    - Añadir imágenes: Agregar más ImageViews con ejercicios
+
+    NOTA:
+    El ScrollView es importante porque en dispositivos pequeños el contenido
+    podría no caber en la pantalla. El scroll garantiza que todo sea visible.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!--
+        CONTENEDOR PRINCIPAL
+        - LinearLayout vertical: Apila los elementos uno debajo del otro
+        - gravity="center_horizontal": Centra el contenido horizontalmente
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!--
+            ICONO GRANDE DEL ENTRENAMIENTO
+            - Tamaño: 120x120dp (mucho más grande que en la lista)
+            - Centrado horizontalmente por el gravity del LinearLayout
+            - Margen inferior: 16dp para separarlo del nombre
+        -->
+        <ImageView
+            android:id="@+id/icono_detalle"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Icono del entrenamiento" />
+
+        <!--
+            NOMBRE DEL ENTRENAMIENTO
+            - Tamaño: 24sp (más grande que en la lista donde es 18sp)
+            - Negrita para destacar
+            - Centrado por wrap_content + gravity del padre
+        -->
+        <TextView
+            android:id="@+id/nombre_detalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:text="Nombre del Entrenamiento" />
+
+        <!--
+            DESCRIPCIÓN COMPLETA
+            - Texto normal (no negrita)
+            - Tamaño: 16sp (legible pero no tan destacado como el título)
+            - match_parent para que use todo el ancho disponible
+            - Puede ser texto largo, por eso necesitamos el ScrollView
+        -->
+        <TextView
+            android:id="@+id/descripcion_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"
+            android:text="Descripción del entrenamiento" />
+
+        <!--
+            DURACIÓN
+            - Negrita para destacar el dato importante
+            - Formato: "Duración: XX minutos"
+            - El texto se construye en DetalleEntrenamientoFragment.java
+        -->
+        <TextView
+            android:id="@+id/duracion_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:text="Duración: 30 minutos" />
+
+        <!--
+            DIFICULTAD
+            - Negrita para destacar
+            - Formato: "Dificultad: Baja/Media/Alta"
+            - Posible mejora: Añadir color según dificultad
+              (Verde=Baja, Naranja=Media, Rojo=Alta)
+        -->
+        <TextView
+            android:id="@+id/dificultad_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Dificultad: Media" />
+
+    </LinearLayout>
+
+</ScrollView>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: activity_main.xml (PORTRAIT - Modo Vertical)
+
+    PROPÓSITO:
+    Layout principal de la aplicación cuando el dispositivo está en orientación VERTICAL.
+    Contiene un único contenedor para fragments (patrón de pantalla única).
+
+    ESTRUCTURA:
+    - Un solo FrameLayout que actúa como contenedor de fragments
+
+    DIFERENCIA CON LANDSCAPE:
+    - Portrait: UN solo contenedor (fragment_container)
+    - Landscape: DOS contenedores (fragment_lista y fragment_detalle)
+
+    CÓMO FUNCIONA:
+    1. MainActivity detecta la orientación
+    2. Android carga automáticamente este layout (sin -land)
+    3. MainActivity carga ListaEntrenamientosFragment en fragment_container
+    4. Al hacer click en un item, se REEMPLAZA con DetalleEntrenamientoFragment
+    5. Botón Atrás vuelve a la lista
+
+    PATRÓN DE DISEÑO:
+    Single-pane (pantalla única con navegación secuencial)
+
+    ATRIBUTOS IMPORTANTES:
+    - fitsSystemWindows="true": Evita que el contenido se oculte detrás de la barra de estado
+    - match_parent: Ocupa toda la pantalla disponible
+
+    NOTA: Para el layout horizontal, ver layout-land/activity_main.xml
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true" />
+

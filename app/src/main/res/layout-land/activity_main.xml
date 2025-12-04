@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: activity_main.xml (LANDSCAPE - Modo Horizontal)
+
+    PROPÓSITO:
+    Layout principal de la aplicación cuando el dispositivo está en orientación HORIZONTAL.
+    Implementa el patrón Master-Detail con DOS contenedores lado a lado.
+
+    ESTRUCTURA:
+    - LinearLayout horizontal: Contiene los dos FrameLayouts en línea
+    - fragment_lista (izquierda): Contiene ListaEntrenamientosFragment
+    - fragment_detalle (derecha): Contiene DetalleEntrenamientoFragment
+
+    DIFERENCIA CON PORTRAIT:
+    - Portrait: UN solo contenedor (navigation secuencial)
+    - Landscape: DOS contenedores (vista simultánea)
+
+    CÓMO FUNCIONA:
+    1. MainActivity detecta la orientación
+    2. Android carga automáticamente este layout (carpeta -land)
+    3. MainActivity carga ambos fragments:
+       - Lista en el panel izquierdo
+       - Detalles en el panel derecho (primer entrenamiento por defecto)
+    4. Al hacer click en un item, se ACTUALIZA el panel derecho (no se reemplaza)
+    5. El panel izquierdo siempre permanece visible
+
+    PATRÓN DE DISEÑO:
+    Master-Detail (lista maestra + panel de detalles)
+
+    PROPORCIONES:
+    - fragment_lista: weight="1" → 33% del ancho (1/(1+2))
+    - fragment_detalle: weight="2" → 67% del ancho (2/(1+2))
+
+    PARA CAMBIAR PROPORCIONES:
+    Modifica los valores de layout_weight:
+    - 50-50: weight="1" y weight="1"
+    - 40-60: weight="2" y weight="3"
+    - 25-75: weight="1" y weight="3"
+
+    ATRIBUTOS IMPORTANTES:
+    - fitsSystemWindows="true": Evita que el contenido se oculte detrás de la barra de estado
+    - baselineAligned="false": Optimización de rendimiento para layouts horizontales
+    - layout_width="0dp": Obligatorio cuando se usa layout_weight
+    - layout_weight: Controla la proporción del espacio que ocupa cada panel
+
+    NOTA: Para el layout vertical, ver layout/activity_main.xml (sin -land)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:fitsSystemWindows="true">
+
+    <!--
+        PANEL IZQUIERDO: Lista de Entrenamientos
+        - Ocupa 33% del ancho (weight 1 de 3 total)
+        - Contiene ListaEntrenamientosFragment
+        - Siempre visible en landscape
+    -->
+    <FrameLayout
+        android:id="@+id/fragment_lista"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <!--
+        PANEL DERECHO: Detalles del Entrenamiento
+        - Ocupa 67% del ancho (weight 2 de 3 total)
+        - Contiene DetalleEntrenamientoFragment
+        - Se actualiza al hacer click en la lista
+    -->
+    <FrameLayout
+        android:id="@+id/fragment_detalle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
+
+</LinearLayout>
+

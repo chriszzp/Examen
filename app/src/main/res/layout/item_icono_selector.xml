@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: item_icono_selector.xml
+
+    PROPÓSITO:
+    Define el diseño de CADA CELDA en el GridView del selector de iconos.
+    Cada celda muestra un icono con su nombre debajo.
+
+    ESTRUCTURA:
+    - LinearLayout vertical: Apila el icono y el texto
+    - ImageView: Muestra el icono (48x48dp)
+    - TextView: Muestra el nombre del icono (ej: "Cardio/Running")
+
+    USADO POR:
+    - IconoAdapter.java (método getView)
+    - dialog_nuevo_entrenamiento.xml (GridView)
+
+    CÓMO SE USA:
+    1. IconoAdapter infla este layout para cada icono disponible
+    2. Busca las vistas por ID (imagen_icono, nombre_icono, icono_container)
+    3. Asigna el icono y el nombre
+    4. Aplica estilos según si está seleccionado o no
+
+    ESTADOS VISUALES:
+    - Seleccionado: Opacidad 100%, fondo destacado
+    - No seleccionado: Opacidad 60%, sin fondo
+
+    INTERACCIÓN:
+    - Al tocar una celda, IconoAdapter cambia el estado de selección
+    - Se actualiza el GridView completo (notifyDataSetChanged)
+
+    MODIFICACIONES COMUNES:
+    - Cambiar tamaño del icono: Modificar layout_width y layout_height del ImageView
+    - Cambiar tamaño del texto: Modificar textSize del TextView
+    - Cambiar padding: Modificar android:padding del LinearLayout
+    - Añadir borde: Agregar background con shape drawable
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/icono_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <!--
+        IMAGEN DEL ICONO
+        - Tamaño: 48x48dp (estándar para iconos de UI)
+        - scaleType="fitCenter": El icono se ajusta al centro sin deformarse
+        - contentDescription: Accesibilidad para lectores de pantalla
+
+        IMPORTANTE:
+        El recurso de la imagen (android:src) se establece dinámicamente
+        en IconoAdapter.java usando setImageResource()
+    -->
+    <ImageView
+        android:id="@+id/imagen_icono"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="Icono de entrenamiento"
+        android:scaleType="fitCenter" />
+
+    <!--
+        NOMBRE DEL ICONO
+        - Texto pequeño (10sp) para que quepa en la celda
+        - textAlignment="center": Centrado horizontalmente
+        - maxLines="2": Permite hasta 2 líneas (ej: "Cardio/\nRunning")
+        - ellipsize="end": Si no cabe, añade "..." al final
+        - layout_marginTop: Espacio entre el icono y el texto
+
+        EJEMPLOS DE TEXTO:
+        - "Cardio/Running"
+        - "Fuerza/Pesas"
+        - "Circuito/HIIT"
+    -->
+    <TextView
+        android:id="@+id/nombre_icono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="10sp"
+        android:textAlignment="center"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Icono" />
+
+</LinearLayout>
+

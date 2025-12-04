@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: dialog_nuevo_entrenamiento.xml
+
+    PROPÓSITO:
+    Layout del diálogo (DialogFragment) que permite crear un nuevo entrenamiento.
+    Contiene un formulario completo con validación para ingresar todos los datos
+    de un entrenamiento y un selector visual de iconos.
+
+    ESTRUCTURA:
+    - ScrollView: Permite scroll si el contenido es grande (importante en móviles)
+    - LinearLayout vertical: Contiene todos los elementos del formulario
+    - TextInputLayouts: Campos de texto con Material Design
+    - Spinner: Lista desplegable para seleccionar dificultad
+    - GridView: Cuadrícula de iconos para seleccionar visualmente
+    - Buttons: Cancelar y Añadir
+
+    USADO POR:
+    - NuevoEntrenamientoDialogFragment.java (método onCreateView)
+
+    CÓMO FUNCIONA:
+    1. Usuario toca el botón [+] en el menú
+    2. MainActivity muestra este diálogo
+    3. Usuario rellena los campos
+    4. Usuario selecciona un icono del GridView
+    5. Usuario toca "Añadir"
+    6. NuevoEntrenamientoDialogFragment valida los datos
+    7. Si son válidos, crea el entrenamiento y actualiza la lista
+    8. Si no son válidos, muestra un Toast con el error
+
+    COMPONENTES PRINCIPALES:
+    - 4 TextInputEditText: Nombre, Descripción, Duración, (+ Spinner para Dificultad)
+    - 1 GridView: Selector de 12 iconos en cuadrícula 4x3
+    - 2 Buttons: Cancelar (cierra) y Añadir (valida y crea)
+
+    VALIDACIONES:
+    Todos los campos son obligatorios (verificado en NuevoEntrenamientoDialogFragment.java)
+
+    MODIFICACIONES COMUNES:
+    - Añadir más campos: Agregar más TextInputLayouts
+    - Cambiar número de columnas del grid: Modificar numColumns en GridView
+    - Cambiar altura del grid: Modificar layout_height del GridView
+    - Cambiar estilos de botones: Modificar style de los Buttons
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!--
+        TÍTULO DEL DIÁLOGO
+        - Muestra "Nuevo Entrenamiento"
+        - Tamaño grande (22sp) y negrita
+        - Centrado horizontalmente
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nuevo Entrenamiento"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
+
+    <!--
+        CAMPO: NOMBRE DEL ENTRENAMIENTO
+        - TextInputLayout: Contenedor de Material Design
+        - hint: Texto que aparece cuando el campo está vacío
+        - TextInputEditText: Campo de texto editable
+        - inputType="text": Tipo de texto normal (no multilinea)
+
+        OBLIGATORIO: Este campo debe tener contenido para poder crear el entrenamiento
+    -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Nombre del entrenamiento">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
+        CAMPO: DESCRIPCIÓN
+        - inputType="textMultiLine": Permite múltiples líneas
+        - minLines="3": Muestra al menos 3 líneas de alto
+        - El usuario puede escribir texto largo con saltos de línea
+
+        OBLIGATORIO: Debe tener contenido
+    -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Descripción">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_descripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
+        CAMPO: DURACIÓN
+        - Texto simple de una línea
+        - Ejemplo en el hint: "30 minutos"
+        - El usuario puede escribir en cualquier formato
+
+        OBLIGATORIO: Debe tener contenido
+    -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Duración (ej: 30 minutos)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_duracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
+        ETIQUETA: DIFICULTAD
+        - TextView simple que indica qué es el Spinner siguiente
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dificultad"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <!--
+        CAMPO: DIFICULTAD (Spinner)
+        - Spinner: Lista desplegable
+        - Opciones: Baja, Media, Alta
+        - Las opciones están definidas en res/values/strings.xml (array "dificultades")
+        - Se configura en NuevoEntrenamientoDialogFragment.java con ArrayAdapter
+    -->
+    <Spinner
+        android:id="@+id/spinner_dificultad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+
+    <!-- ==================== SELECTOR DE ICONOS ==================== -->
+
+    <!--
+        TÍTULO: SELECTOR DE ICONOS
+        - Indica que el usuario debe seleccionar un icono
+        - Negrita para destacar
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecciona un icono"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!--
+        INSTRUCCIÓN
+        - Texto pequeño que explica cómo usar el selector
+        - Color gris (#666666) para diferenciarlo del texto principal
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toca un icono para seleccionarlo"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp"
+        android:textColor="#666666" />
+
+    <!--
+        GRID DE ICONOS
+        - GridView: Cuadrícula de elementos
+        - numColumns="4": 4 iconos por fila
+        - layout_height="200dp": Altura fija para que quepan 3 filas (4x3 = 12 iconos)
+        - horizontalSpacing/verticalSpacing: Espacio entre iconos
+        - stretchMode="columnWidth": Los iconos se estiran para llenar el espacio
+
+        IMPORTANTE:
+        - Usa IconoAdapter para mostrar los iconos
+        - Cada celda usa el layout item_icono_selector.xml
+        - El icono seleccionado se destaca con opacidad 100% y fondo
+        - Los no seleccionados tienen opacidad 60%
+        - Por defecto, el primer icono (Cardio) está seleccionado
+    -->
+    <GridView
+        android:id="@+id/grid_iconos"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:numColumns="4"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="8dp"
+        android:stretchMode="columnWidth"
+        android:layout_marginBottom="20dp" />
+
+    <!-- ==================== BOTONES ==================== -->
+
+    <!--
+        CONTENEDOR DE BOTONES
+        - LinearLayout horizontal para poner botones en línea
+        - gravity="end": Alinea los botones a la derecha (patrón Material Design)
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <!--
+            BOTÓN: CANCELAR
+            - style="Borderless": Botón sin borde (estilo Material Design)
+            - layout_marginEnd: Espacio entre Cancelar y Añadir
+            - Al tocar: Cierra el diálogo sin crear el entrenamiento
+        -->
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_marginEnd="8dp"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+        <!--
+            BOTÓN: AÑADIR
+            - Botón principal con color destacado
+            - Al tocar:
+              1. Valida que todos los campos estén completos
+              2. Si son válidos, crea el entrenamiento
+              3. Si no, muestra un Toast con el error
+        -->
+        <Button
+            android:id="@+id/btn_anadir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>
+

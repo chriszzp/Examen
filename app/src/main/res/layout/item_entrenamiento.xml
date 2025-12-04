@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: item_entrenamiento.xml
+
+    PROPÓSITO:
+    Define el diseño de CADA FILA individual en la lista de entrenamientos.
+    Este layout se usa en el ListView del ListaEntrenamientosFragment.
+
+    ESTRUCTURA:
+    - LinearLayout horizontal: Contiene el icono y el texto en línea
+    - ImageView: Muestra el icono del entrenamiento (48x48dp)
+    - TextView: Muestra el nombre del entrenamiento
+
+    USADO POR:
+    - EntrenamientoAdapter.java (método getView)
+
+    CÓMO SE USA:
+    1. El Adapter infla este layout para cada entrenamiento
+    2. Busca las vistas por ID (icono_entrenamiento, nombre_entrenamiento)
+    3. Asigna los valores del objeto Entrenamiento
+    4. La vista se muestra en el ListView
+
+    MODIFICACIONES COMUNES:
+    - Cambiar tamaño del icono: Modificar layout_width y layout_height del ImageView
+    - Cambiar tamaño del texto: Modificar textSize del TextView
+    - Añadir más información: Agregar más TextViews (duración, dificultad, etc.)
+    - Cambiar orden: Intercambiar posiciones de ImageView y TextView
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical">
+
+    <!--
+        ICONO DEL ENTRENAMIENTO
+        - Tamaño: 48x48dp (tamaño estándar para iconos en listas)
+        - Margen derecho: 16dp para separarlo del texto
+        - contentDescription: Accesibilidad para lectores de pantalla
+    -->
+    <ImageView
+        android:id="@+id/icono_entrenamiento"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Icono del entrenamiento" />
+
+    <!--
+        NOMBRE DEL ENTRENAMIENTO
+        - layout_width="0dp": Necesario cuando se usa layout_weight
+        - layout_weight="1": Ocupa todo el espacio restante después del icono
+        - textSize="18sp": Tamaño grande para facilitar lectura
+        - textStyle="bold": Negrita para destacar
+        - text: Valor por defecto solo para preview en el editor
+    -->
+    <TextView
+        android:id="@+id/nombre_entrenamiento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Nombre del Entrenamiento" />
+
+</LinearLayout>
+

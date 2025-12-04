@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MENU: main_menu.xml
+
+    PROPÓSITO:
+    Define el menú de opciones que aparece en la ActionBar de la MainActivity.
+    Contiene el botón [+] para añadir nuevos entrenamientos.
+
+    USADO POR:
+    - MainActivity.java (método onCreateOptionsMenu)
+
+    CÓMO FUNCIONA:
+    1. MainActivity llama a onCreateOptionsMenu()
+    2. Se infla este menú usando getMenuInflater().inflate()
+    3. Android muestra los items en la ActionBar
+    4. Al tocar un item, se llama a onOptionsItemSelected()
+    5. MainActivity verifica el ID y ejecuta la acción correspondiente
+
+    ATRIBUTOS IMPORTANTES:
+    - id: Identificador único del item (usado en onOptionsItemSelected)
+    - title: Texto que se muestra (puede ser solo el icono si hay espacio)
+    - icon: Recurso drawable del icono
+    - showAsAction: Controla CUÁNDO se muestra el item:
+      * always: Siempre visible en la ActionBar (usado aquí)
+      * ifRoom: Visible si hay espacio, si no va al menú overflow
+      * never: Siempre en el menú overflow (los tres puntos)
+
+    MODIFICACIONES COMUNES:
+    - Añadir más items: Agregar más tags <item>
+    - Cambiar icono: Modificar android:icon
+    - Cambiar cuándo se muestra: Modificar app:showAsAction
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+        ITEM: AÑADIR ENTRENAMIENTO
+        - id="menu_anadir": Identificador usado en MainActivity.onOptionsItemSelected()
+        - title: Texto descriptivo (importante para accesibilidad)
+        - icon: Icono de "añadir" del sistema Android (símbolo +)
+        - showAsAction="always": SIEMPRE visible en la ActionBar (no se oculta)
+
+        AL TOCAR ESTE BOTÓN:
+        1. onOptionsItemSelected() detecta el ID menu_anadir
+        2. Llama a mostrarDialogoNuevoEntrenamiento()
+        3. Se muestra el DialogFragment con el formulario
+    -->
+    <item
+        android:id="@+id/menu_anadir"
+        android:title="Añadir Entrenamiento"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="always" />
+
+</menu>
+

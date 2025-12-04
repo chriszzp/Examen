@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Examen</string>
+    <string name="menu_anadir">Añadir Entrenamiento</string>
+    <string name="titulo_lista">Lista de Entrenamientos</string>
+    <string name="titulo_nuevo_entrenamiento">Nuevo Entrenamiento</string>
+    <string name="hint_nombre">Nombre del entrenamiento</string>
+    <string name="hint_descripcion">Descripción</string>
+    <string name="hint_duracion">Duración (ej: 30 minutos)</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_anadir">Añadir</string>
+    <string name="label_dificultad">Dificultad</string>
+
+    <string-array name="dificultades">
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
+    </string-array>
+</resources>

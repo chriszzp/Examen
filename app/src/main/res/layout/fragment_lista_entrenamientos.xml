@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    LAYOUT: fragment_lista_entrenamientos.xml
+
+    PROPÓSITO:
+    Layout del ListaEntrenamientosFragment que muestra la lista de entrenamientos.
+    Es el "Master" del patrón Master-Detail.
+
+    ESTRUCTURA:
+    - LinearLayout vertical: Contiene el título y el ListView
+    - TextView: Título "Lista de Entrenamientos"
+    - ListView: Muestra todos los entrenamientos usando EntrenamientoAdapter
+
+    USADO POR:
+    - ListaEntrenamientosFragment.java (método onCreateView)
+
+    CÓMO SE USA:
+    1. ListaEntrenamientosFragment infla este layout
+    2. Busca el ListView por ID (lista_entrenamientos)
+    3. Le asigna el EntrenamientoAdapter con los datos
+    4. Configura el OnItemClickListener para manejar clicks
+
+    COMPONENTES:
+    - Título: Encabezado fijo que identifica la sección
+    - ListView: Lista scrolleable de entrenamientos
+
+    MODIFICACIONES COMUNES:
+    - Cambiar color/grosor del divisor: Modificar divider y dividerHeight
+    - Quitar el título: Eliminar el TextView
+    - Cambiar el padding: Modificar android:padding del LinearLayout
+    - Añadir un botón flotante: Agregar FloatingActionButton
+
+    NOTA:
+    Cada item del ListView usa el layout item_entrenamiento.xml
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!--
+        TÍTULO DE LA LISTA
+        - Muestra "Lista de Entrenamientos"
+        - Tamaño: 20sp (más grande que el texto normal)
+        - Negrita para destacar
+        - Centrado horizontalmente
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lista de Entrenamientos"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:gravity="center" />
+
+    <!--
+        LISTA DE ENTRENAMIENTOS
+        - ListView: Componente scrolleable que muestra múltiples items
+        - divider: Color de las líneas que separan los items
+        - dividerHeight: Grosor de las líneas separadoras (1dp = 1 pixel independiente de densidad)
+
+        IMPORTANTE:
+        - Este ListView usa EntrenamientoAdapter para mostrar los datos
+        - Cada fila usa el layout item_entrenamiento.xml
+        - El adapter se asigna en ListaEntrenamientosFragment.java
+    -->
+    <ListView
+        android:id="@+id/lista_entrenamientos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
+
